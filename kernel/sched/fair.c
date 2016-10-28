@@ -6828,6 +6828,25 @@ void idle_balance(int this_cpu, struct rq *this_rq)
 	}
 }
 
+static ATOMIC_NOTIFIER_HEAD(hmp_task_migration_notifier);
+
+int register_hmp_task_migration_notifier(struct notifier_block *nb)
+{
+	return atomic_notifier_chain_register(&hmp_task_migration_notifier, nb);
+}
+
+static int hmp_up_migration_noti(void)
+{
+	return atomic_notifier_call_chain(&hmp_task_migration_notifier,
+			HMP_UP_MIGRATION, NULL);
+}
+
+static int hmp_down_migration_noti(void)
+{
+	return atomic_notifier_call_chain(&hmp_task_migration_notifier,
+			HMP_DOWN_MIGRATION, NULL);
+}
+
 static int __do_active_load_balance_cpu_stop(void *data, bool check_sd_lb_flag)
 {
 	struct rq *busiest_rq = data;
@@ -6888,8 +6907,7 @@ static int __do_active_load_balance_cpu_stop(void *data, bool check_sd_lb_flag)
 
 		schedstat_inc(sd, alb_count);
 
-		if (move_one_task(&env))
-		if (check_sd_lb_flag) {
+		if (move_one_task(&env) && check_sd_lb_flag) {
 			if (move_one_task(&env))
 				success = true;
 		} else {
@@ -6904,6 +6922,7 @@ static int __do_active_load_balance_cpu_stop(void *data, bool check_sd_lb_flag)
 				hmp_down_migration_noti();
 		} else {
 			schedstat_inc(sd, alb_failed);
+		}
 	}
 	rcu_read_unlock();
 	double_unlock_balance(busiest_rq, target_rq);
@@ -7507,7 +7526,7 @@ static int move_specific_task(struct lb_env *env, struct task_struct *pm)
 	list_for_each_entry_safe(p, n, &env->src_rq->cfs_tasks, se.group_node) {
 	    if (throttled_lb_pair(task_group(p), env->src_rq->cpu,
 				env->dst_cpu))
-		    continue;
+            continue;
 
 		if (!hmp_can_migrate_task(p, env))
 			continue;
@@ -7525,25 +7544,6 @@ static int move_specific_task(struct lb_env *env, struct task_struct *pm)
 		return 1;
 	}
 	return 0;
-}
-
-static ATOMIC_NOTIFIER_HEAD(hmp_task_migration_notifier);
-
-int register_hmp_task_migration_notifier(struct notifier_block *nb)
-{
-	return atomic_notifier_chain_register(&hmp_task_migration_notifier, nb);
-}
-
-static int hmp_up_migration_noti(void)
-{
-	return atomic_notifier_call_chain(&hmp_task_migration_notifier,
-			HMP_UP_MIGRATION, NULL);
-}
-
-static int hmp_down_migration_noti(void)
-{
-	return atomic_notifier_call_chain(&hmp_task_migration_notifier,
-			HMP_DOWN_MIGRATION, NULL);
 }
 
 /*
@@ -7605,10 +7605,10 @@ static void hmp_force_up_migration(int this_cpu)
 		p = task_of(curr);
 		if (hmp_up_migration(cpu, &target_cpu, curr)) {
 			cpu_rq(target_cpu)->wake_for_idle_pull = 1;
-+			raw_spin_unlock_irqrestore(&target->lock, flags);
-+			spin_unlock(&hmp_force_migration);
-+			smp_send_reschedule(target_cpu);
-+			return;
+			raw_spin_unlock_irqrestore(&target->lock, flags);
+			spin_unlock(&hmp_force_migration);
+			smp_send_reschedule(target_cpu);
+			return;
 		}
 		if (!force) {
 			/*
