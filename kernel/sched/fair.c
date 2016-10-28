@@ -6786,9 +6786,13 @@ static int __do_active_load_balance_cpu_stop(void *data, bool check_sd_lb_flag)
 			if (move_specific_task(&env, p))
 				success = true;
 		}
-		if (success)
+		if (success) {
 			schedstat_inc(sd, alb_pushed);
-		else
+			if (hmp_cpu_is_fastest(target_cpu))
+				hmp_up_migration_noti();
+			else if (hmp_cpu_is_slowest(target_cpu))
+				hmp_down_migration_noti();
+		} else {
 			schedstat_inc(sd, alb_failed);
 	}
 	rcu_read_unlock();
