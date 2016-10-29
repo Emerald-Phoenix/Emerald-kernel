@@ -3967,7 +3967,7 @@ static int hmp_boostpulse;
 static int hmp_active_down_migration;
 static int hmp_aggressive_up_migration;
 static int hmp_aggressive_yield;
-static int hmp_fork_migrate_big = 0;
+static int hmp_fork_migrate_big = 1;
 static DEFINE_RAW_SPINLOCK(hmp_boost_lock);
 static DEFINE_RAW_SPINLOCK(hmp_semiboost_lock);
 static DEFINE_RAW_SPINLOCK(hmp_sysfs_lock);
