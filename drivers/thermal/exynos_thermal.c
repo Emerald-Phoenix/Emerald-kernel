@@ -151,7 +151,7 @@ static struct notifier_block exynos_cpufreq_nb = {
 #define MIF_THROTTLING1_BIG					(1000 * 1000)
 #define MIF_THROTTLING1_LITTLE				(PM_QOS_CPU_FREQ_DEFAULT_VALUE)
 #define MIF_THROTTLING2_BIG					(800 * 1000)
-#define MIF_THROTTLING2_LITTLE				(1000 * 1000)
+#define MIF_THROTTLING2_LITTLE				(1200 * 1000)
 
 static bool is_mif_thermal_hotplugged_out;
 static enum mif_thermal_state_t mif_thermal_state = MIF_NORMAL;
