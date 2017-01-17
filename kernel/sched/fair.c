@@ -1141,7 +1141,7 @@ static inline void update_cfs_shares(struct cfs_rq *cfs_rq)
  * Note: The tables below are dependent on this value.
  */
 #define LOAD_AVG_PERIOD 32
-#define BOOST_LOAD_AVG_PERIOD 16
+#define BOOST_LOAD_AVG_PERIOD 32
 #define LOAD_AVG_MAX 47742 /* maximum possible load avg */
 #define LOAD_AVG_MAX_N 345 /* number of full periods to produce LOAD_MAX_AVG */
 
