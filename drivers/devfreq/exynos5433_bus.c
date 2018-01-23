@@ -3403,7 +3403,7 @@ void exynos5_update_media_layers(enum devfreq_media_type media_type, unsigned in
 		if (media_enabled_tv) {
 			if (mif_qos > distriction_fullhd_tv[total_layer_count].mif_level)
 				mif_qos = distriction_fullhd_tv[total_layer_count].mif_level;
-			if (int_qos > distriction_fullhd_tv[total_layer_count].int_level);
+			if (int_qos > distriction_fullhd_tv[total_layer_count].int_level)
 				int_qos = distriction_fullhd_tv[total_layer_count].int_level;
 			if (disp_qos > distriction_fullhd_tv[total_layer_count].disp_level)
 				disp_qos = distriction_fullhd_tv[total_layer_count].disp_level;
