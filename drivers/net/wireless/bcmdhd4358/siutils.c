@@ -524,7 +524,10 @@ si_doattach(si_info_t *sii, uint devid, osl_t *osh, void *regs,
 	}
 
 	sih->bustype = bustype;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtautological-compare"
 	if (bustype != BUSTYPE(bustype)) {
+#pragma GCC diagnostic pop
 		SI_ERROR(("si_doattach: bus type %d does not match configured bus type %d\n",
 			bustype, BUSTYPE(bustype)));
 		return NULL;

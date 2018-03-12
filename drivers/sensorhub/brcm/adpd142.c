@@ -1328,22 +1328,22 @@ sample_attr_set_enable(struct device *dev, struct device_attribute *attr,
 			gpio_set_value(pst_adpd->led_en, 1);
 		else if (!IS_ERR(pst_adpd->leda))
 			rc = regulator_enable(pst_adpd->leda);
-			if (rc){
-				pr_info(KERN_ERR "%s: adpd enable failed (%d)\n",__func__, rc);
-			}
-			cmd_parsing("0x31", 1, parse_data);
-			atomic_set(&pst_adpd->sample_enabled, 1);
+		if (rc){
+			pr_info(KERN_ERR "%s: adpd enable failed (%d)\n",__func__, rc);
+		}
+		cmd_parsing("0x31", 1, parse_data);
+		atomic_set(&pst_adpd->sample_enabled, 1);
 	} else {
 		pr_info("adpd142_%s_disable.\n", __func__);
 		if (pst_adpd->led_en != -1)
 			gpio_set_value(pst_adpd->led_en, 0);
 		else if (!IS_ERR(pst_adpd->leda))
 			rc = regulator_disable(pst_adpd->leda);
-			if (rc){
-				pr_info(KERN_ERR "%s: adpd disable failed (%d)\n",__func__, rc);
-			}
-			cmd_parsing("0x0", 1, parse_data);
-			atomic_set(&pst_adpd->sample_enabled, 0);
+		if (rc){
+			pr_info(KERN_ERR "%s: adpd disable failed (%d)\n",__func__, rc);
+		}
+		cmd_parsing("0x0", 1, parse_data);
+		atomic_set(&pst_adpd->sample_enabled, 0);
 	}
 	mode = GET_USR_MODE(parse_data[0]);
 
