@@ -3678,15 +3678,15 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 		if (unlikely(!pg_vec))
 			goto out;
 		switch (po->tp_version) {
-		case TPACKET_V3:
-		/* Transmit path is not supported. We checked
-		 * it above but just being paranoid
-		 */
-			if (!tx_ring)
-				init_prb_bdqc(po, rb, pg_vec, req_u, tx_ring);
+		    case TPACKET_V3:
+		    /* Transmit path is not supported. We checked
+		    * it above but just being paranoid
+		    */
+			    if (!tx_ring)
+				    init_prb_bdqc(po, rb, pg_vec, req_u, tx_ring);
 				break;
-		default:
-			break;
+		    default:
+			    break;
 		}
 	}
 	/* Done */
