@@ -95,7 +95,7 @@ static int dt_remember_or_free_map(struct pinctrl *p, const char *statename,
 #ifdef CONFIG_MULTITHREAD_PROBE
 	return pinctrl_register_map(map, num_maps, false, false);
 #else
-	return pinctrl_register_map(map, num_maps, false, true);
+	return pinctrl_register_map(map, num_maps, false);
 #endif
 }
 
