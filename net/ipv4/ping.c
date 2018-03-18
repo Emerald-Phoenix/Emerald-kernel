@@ -863,7 +863,7 @@ int ping_recvmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 			return ip_recv_error(sk, msg, len, addr_len);
 #if IS_ENABLED(CONFIG_IPV6)
 		} else if (family == AF_INET6) {
-			return pingv6_ops.ipv6_recv_error(sk, msg, len);
+			return pingv6_ops.ipv6_recv_error(sk, msg, len, addr_len);
 #endif
 		}
 	}
@@ -1134,13 +1134,6 @@ static int ping_v4_seq_show(struct seq_file *seq, void *v)
 	}
 	return 0;
 }
-
-static const struct seq_operations ping_v4_seq_ops = {
-	.show		= ping_v4_seq_show,
-	.start		= ping_v4_seq_start,
-	.next		= ping_seq_next,
-	.stop		= ping_seq_stop,
-};
 
 static int ping_seq_open(struct inode *inode, struct file *file)
 {
