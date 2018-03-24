@@ -2455,8 +2455,8 @@ static void set_longpress_enable(void *device_data)
 		else
 			longpress_grip_enable_mode(info, 0);
 
-			snprintf(buff, sizeof(buff), "%s", "OK");
-			info->cmd_state = CMD_STATUS_OK;
+		snprintf(buff, sizeof(buff), "%s", "OK");
+		info->cmd_state = CMD_STATUS_OK;
 	}
 	set_cmd_result(info, buff, strnlen(buff, sizeof(buff)));
 	mutex_lock(&info->cmd_lock);

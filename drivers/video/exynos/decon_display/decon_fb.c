@@ -149,14 +149,6 @@ extern int decon_mic_disable(struct decon_mic *mic);
 extern struct ion_device *ion_exynos;
 #endif
 
-#ifdef CONFIG_OF
-static const struct of_device_id exynos5_decon[] = {
-	{ .compatible = "samsung,exynos5-decon" },
-	{},
-};
-MODULE_DEVICE_TABLE(of, exynos5_decon);
-#endif
-
 #ifdef CONFIG_USE_VSYNC_SKIP
 static atomic_t extra_vsync_wait;
 #endif /* CONFIG_USE_VSYNC_SKIP */
@@ -5326,12 +5318,6 @@ int decon_hibernation_power_off(struct display_driver *dispdrv)
 	return ret;
 }
 #endif
-
-static const struct dev_pm_ops s3cfb_pm_ops = {
-	SET_SYSTEM_SLEEP_PM_OPS(s3c_fb_suspend, s3c_fb_resume)
-	SET_RUNTIME_PM_OPS(s3c_fb_runtime_suspend, s3c_fb_runtime_resume,
-			   NULL)
-};
 
 
 MODULE_AUTHOR("Ben Dooks <ben@simtec.co.uk>");

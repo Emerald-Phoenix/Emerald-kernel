@@ -60,14 +60,6 @@ static DECLARE_COMPLETION(dsim_rd_comp);
 #define MIPI_WR_TIMEOUT msecs_to_jiffies(50)
 #define MIPI_RD_TIMEOUT msecs_to_jiffies(50)
 
-#ifdef CONFIG_OF
-static const struct of_device_id exynos5_dsim[] = {
-	{ .compatible = "samsung,exynos5-dsim" },
-	{},
-};
-MODULE_DEVICE_TABLE(of, exynos5_dsim);
-#endif
-
 struct mipi_dsim_device *dsim_for_decon;
 EXPORT_SYMBOL(dsim_for_decon);
 

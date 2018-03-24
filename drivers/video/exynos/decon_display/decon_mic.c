@@ -25,14 +25,6 @@
 #include "decon_pm.h"
 #include "mic_reg.h"
 
-#ifdef CONFIG_OF
-static const struct of_device_id exynos5_mic[] = {
-	{ .compatible = "samsung,exynos5-mic" },
-	{},
-};
-MODULE_DEVICE_TABLE(of, exynos5_mic);
-#endif
-
 struct decon_mic *mic_for_decon;
 EXPORT_SYMBOL(mic_for_decon);
 

@@ -28,10 +28,6 @@
 
 static struct snd_soc_card pacific_hdmi_card;
 
-static const struct snd_soc_component_driver pacific_cmpnt = {
-	.name	= "pacific-hdmi",
-};
-
 static int set_aud_pll_rate(unsigned long rate)
 {
 	struct clk *fout_aud_pll;

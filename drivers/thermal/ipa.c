@@ -646,7 +646,6 @@ static int debugfs_k_get(void *data, u64 *val)
 }
 
 DEFINE_SIMPLE_ATTRIBUTE(k_fops, debugfs_k_get, debugfs_k_set, "%llu\n");
-DEFINE_SIMPLE_ATTRIBUTE(k_fops_ro, debugfs_k_get, NULL, "%llu\n");
 
 static int debugfs_u32_get(void *data, u64 *val)
 {

@@ -130,10 +130,6 @@ static const struct soc_enum voicecontrol_mode_enum[] = {
 			voicecontrol_mode_text),
 };
 
-static const struct snd_soc_component_driver pacific_cmpnt = {
-	.name	= "pacific-audio",
-};
-
 static struct {
 	int min;           /* Minimum impedance */
 	int max;           /* Maximum impedance */
