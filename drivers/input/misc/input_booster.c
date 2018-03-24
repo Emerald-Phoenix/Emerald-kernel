@@ -206,8 +206,8 @@ DECLARE_DVFS_WORK_FUNC(SET, TOUCHKEY)
 	break;
 	case BOOSTER_MODE_OFF:
 		if (dvfs->lock_status)
-			cancel_delayed_work(&dvfs->dvfs_off_work);
-			schedule_work(&dvfs->dvfs_off_work.work);
+			schedule_delayed_work(&dvfs->dvfs_off_work,
+                                            msecs_to_jiffies(dvfs->times[BOOSTER_LEVEL1].tail_time));
 	break;
 	case BOOSTER_MODE_FORCE_OFF:
 		if (dvfs->lock_status) {
