@@ -225,16 +225,14 @@ static ssize_t show_volt_table(struct device *dev, struct device_attribute *attr
 {
 	struct exynos_context *platform = (struct exynos_context *)pkbdev->platform_context;
 	ssize_t count = 0, pr_len;
-	int i, max, min;
+	int i;
 
 	if (!platform)
 		return -ENODEV;
 
-	max = gpu_dvfs_get_level(platform->gpu_max_clock);
-	min = gpu_dvfs_get_level(platform->gpu_min_clock);
-	pr_len = (size_t)((PAGE_SIZE - 2) / (min-max));
+	pr_len = (size_t)((PAGE_SIZE - 2) / (platform->table_size));
 
-	for (i = max; i <= min; i++) {
+	for (i = 0; i < platform->table_size; i++) {
 		count += snprintf(&buf[count], pr_len, "%d %d\n",
 				platform->table[i].clock,
 				platform->table[i].voltage);
@@ -246,18 +244,16 @@ static ssize_t show_volt_table(struct device *dev, struct device_attribute *attr
 static ssize_t set_volt_table(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
 {
 	struct exynos_context *platform = (struct exynos_context *)pkbdev->platform_context;
-	int max = gpu_dvfs_get_level(platform->gpu_max_clock);
-	int min = gpu_dvfs_get_level(platform->gpu_min_clock);
 	int i, tokens, rest, target;
-	int t[min - max];
+	int t[platform->table_size];
 	unsigned long flags;
 
-	if ((tokens = read_into((int*)&t, min-max, buf, count)) < 0)
+	if ((tokens = read_into((int*)&t, platform->table_size, buf, count)) < 0)
 		return -EINVAL;
 
 	target = -1;
 	if (tokens == 2) {
-		for (i = max; i <= min; i++) {
+		for (i = 0; i < platform->table_size; i++) {
 			if (t[0] == platform->table[i].clock) {
 				target = i;
 				break;
@@ -268,14 +264,14 @@ static ssize_t set_volt_table(struct device *dev, struct device_attribute *attr,
 	spin_lock_irqsave(&platform->gpu_dvfs_spinlock, flags);
 
 	if (tokens == 2 && target > -1) {
-		sanitize_min_max(t[1], 600000, 1100000);
+		sanitize_min_max(t[1], 600000, 1150000);
 		if ((rest = t[1] % 6250) != 0) t[1] += 6250-rest;
 		platform->table[target].voltage = t[1];
 	} else {
 		for (i = 0; i < tokens; i++) {
 			if ((rest = t[1] % 6250) != 0) t[1] += 6250-rest;
-			sanitize_min_max(t[i], 600000, 1100000);
-			platform->table[i + max].voltage = t[i];
+			sanitize_min_max(t[i], 600000, 1150000);
+			platform->table[i].voltage = t[i];
 		}
 	}
 
