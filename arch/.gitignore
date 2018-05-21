@@ -29,3 +29,5 @@ unicore32
 x86
 xtensa
 x86_64
+arm/kernel/asm-offsets.s
+arm/lib/lib.a

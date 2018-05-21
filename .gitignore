@@ -1,0 +1,4 @@
+Module.symvers
+System.map
+vmlinux
+.missing-syscalls.d
