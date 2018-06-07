@@ -1138,7 +1138,7 @@ static int exynos_cpufreq_cpu_init(struct cpufreq_policy *policy)
 	cpufreq_frequency_table_get_attr(exynos_info[cur]->freq_table, policy->cpu);
 
 	/* set the transition latency value */
-	policy->cpuinfo.transition_latency = 100000;
+	policy->cpuinfo.transition_latency = 10000;
 
 	if (cpumask_test_cpu(policy->cpu, &cluster_cpus[CA15])) {
 		cpumask_copy(policy->cpus, &cluster_cpus[CA15]);
