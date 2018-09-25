@@ -858,6 +858,16 @@ config EXYNOS4_SDHCI_CH2_8BIT
 	  If selected, Channel 3 is disabled.
 endif
 
+choice
+	prompt "Exynos device target"
+	default ARCH_EXYNOS5433_NONE
+
+config ARCH_EXYNOS5433_TRLTE_EUR_OPEN
+	bool "Galaxt Note 4 (SM-N910C)"
+	select EXYNOS_DTBTOOL
+
+endchoice
+
 menuconfig EXYNOS_DTBTOOL
 	bool "Build dtbtool for Exynos"
 	select DTC
@@ -871,7 +881,7 @@ if EXYNOS_DTBTOOL
 
 config EXYNOS_DTBH_PLATFORM_CODE
 	hex "Exynos DTBH hex platform code"
-	default 0x50a6
+	default 0x3ec3
 	help
 	  This value is verified by the bootloader
 	  to determine if the DTB image is valid for
@@ -879,7 +889,7 @@ config EXYNOS_DTBH_PLATFORM_CODE
 
 config EXYNOS_DTBH_SUBTYPE_CODE
 	hex "Exynos DTBH hex subtype code"
-	default 0x217584da
+	default 0x3a37307e
 	help
 	  This value is verified by the bootloader
 	  to determine if the DTB image is valid for
