@@ -862,8 +862,8 @@ choice
 	prompt "Exynos device target"
 	default ARCH_EXYNOS5433_NONE
 
-config ARCH_EXYNOS5433_TRLTE_EUR_OPEN
-	bool "Galaxt Note 4 (SM-N910C)"
+config ARCH_EXYNOS5433_TRE_EUR_OPEN
+	bool "Galaxy Note 4 (SM-N910C)"
 	select EXYNOS_DTBTOOL
 
 endchoice

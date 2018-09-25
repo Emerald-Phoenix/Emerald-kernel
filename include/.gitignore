@@ -1,8 +1,10 @@
 generated
+config/arch/exynos5433
 config/auto.conf
 config/kernel.release
 config/tristate.conf
 config/exynos/soc
+config/exynos/dtb*
 config/mali/debug/kernel
 config/mali/pm
 config/mali/r15p0.h

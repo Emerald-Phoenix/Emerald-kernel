@@ -31,3 +31,4 @@ xtensa
 x86_64
 arm/kernel/asm-offsets.s
 arm/lib/lib.a
+arm/boot/dtb.img

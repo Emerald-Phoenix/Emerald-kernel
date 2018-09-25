@@ -12,3 +12,4 @@ docproc
 sortextable
 asn1_compiler
 mod/devicetable-offsets.s
+dtbtool_exynos/dtbtool
