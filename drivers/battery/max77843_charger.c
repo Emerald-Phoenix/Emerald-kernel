@@ -1074,7 +1074,7 @@ static int max77843_chg_set_property(struct power_supply *psy,
 				max77843_set_input_current(charger,
 						   set_charging_current_max);
 			} else {
-				if (charger->siop_level < 100) {
+				if (charger->charging_current_max > 1000 && charger->siop_level < 100) {
 					set_charging_current_max =
 						charger->charging_current_max * val->intval / 100;
 					if (set_charging_current_max > SIOP_INPUT_LIMIT_CURRENT) {
