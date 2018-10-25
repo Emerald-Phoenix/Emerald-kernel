@@ -1056,7 +1056,10 @@ static int max77843_chg_set_property(struct power_supply *psy,
 					__func__,
 					charger->siop_level, charger->afc_detect,
 					set_charging_current_max, current_now);
-				if (charger->siop_level < 100 &&
+				if (charger->cable_type == POWER_SUPPLY_TYPE_HV_MAINS && charger->siop_level < 100 &&
+				    current_now > SIOP_CHARGING_HV_LIMIT_CURRENT)
+					current_now = SIOP_CHARGING_HV_LIMIT_CURRENT;
+				else if (charger->siop_level < 100 &&
 				    current_now > SIOP_CHARGING_LIMIT_CURRENT)
 					current_now = SIOP_CHARGING_LIMIT_CURRENT;
 				max77843_set_input_current(charger,
