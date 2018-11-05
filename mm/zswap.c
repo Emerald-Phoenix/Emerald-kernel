@@ -103,7 +103,11 @@ module_param_named(max_pool_percent,
  * compressed page. Any pages that do not compress by at least
  * this ratio will be rejected.
 */
+#ifdef CONFIG_CRYPTO_LZ4
+static unsigned int zswap_max_compression_ratio = 83;
+#else
 static unsigned int zswap_max_compression_ratio = 80;
+#endif
 module_param_named(max_compression_ratio,
 			zswap_max_compression_ratio, uint, 0644);
 
