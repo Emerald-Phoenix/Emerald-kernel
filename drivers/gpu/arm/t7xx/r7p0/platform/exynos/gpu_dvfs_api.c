@@ -282,6 +282,7 @@ int gpu_dvfs_clock_lock(gpu_dvfs_lock_command lock_command, gpu_dvfs_lock_type l
 	int i;
 	bool dirty = false;
 	unsigned long flags;
+	int gpu_max_lock_min = 350; //lowest clockspeed gpu_max_lock can be set to
 
 	DVFS_ASSERT(platform);
 
@@ -302,8 +303,8 @@ int gpu_dvfs_clock_lock(gpu_dvfs_lock_command lock_command, gpu_dvfs_lock_type l
 			return -1;
 		}
 
-		platform->user_max_lock[lock_type] = clock;
-		platform->max_lock = clock;
+		platform->user_max_lock[lock_type] = MAX(clock, gpu_max_lock_min);
+		platform->max_lock = MAX(clock, gpu_max_lock_min);
 
 		if (platform->max_lock > 0) {
 			for (i = 0; i < NUMBER_LOCK; i++) {
@@ -311,7 +312,7 @@ int gpu_dvfs_clock_lock(gpu_dvfs_lock_command lock_command, gpu_dvfs_lock_type l
 					platform->max_lock = MIN(platform->max_lock, platform->user_max_lock[i]);
 			}
 		} else {
-			platform->max_lock = clock;
+			platform->max_lock = MAX(clock, gpu_max_lock_min);
 		}
 
 		spin_unlock_irqrestore(&platform->gpu_dvfs_spinlock, flags);
